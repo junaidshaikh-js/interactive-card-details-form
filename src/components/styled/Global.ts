@@ -8,6 +8,12 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;\
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
   }
 `;
