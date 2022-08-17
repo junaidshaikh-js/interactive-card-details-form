@@ -1,9 +1,11 @@
 import styled from "styled-components";
 
-export const Input = styled.input`
+export const Input = styled.input<{
+  error?: boolean;
+}>`
   padding: 0.7rem 1rem;
   margin: 0.5rem auto;
-  border: 1px solid gray;
+  border: 1px solid ${({ error, theme }) => (error ? theme.colors.red : "gray")};
   border-radius: 7px;
   display: block;
   width: 100%;
