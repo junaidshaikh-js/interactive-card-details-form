@@ -7,7 +7,7 @@ import { Grid } from "./styled/Grid";
 import { Input } from "./styled/Input";
 import { SuccessMessage } from "./SuccessMessage";
 
-const initialState = {
+export const initialState = {
   cardHolderName: "",
   cardNumber: "",
   expiryMonth: "",
@@ -21,6 +21,8 @@ export const CardDetailsForm = () => {
     ...initialState,
     expiryDate: "",
   });
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { cardHolderName, cardNumber, expiryMonth, expiryYear, cvc } =
     cardDetails;
@@ -37,90 +39,105 @@ export const CardDetailsForm = () => {
     const error = validateCardDetails(cardDetails);
 
     setCardDetailsError(error);
+
+    for (let value of Object.values(error)) {
+      if (value) return;
+    }
+
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setIsFormSubmitted(true);
+      setCardDetails(initialState);
+    }, 1000);
   };
 
   return (
     <StyledCardForm onSubmit={handleSubmit}>
-      <Grid gridColumn="1fr 1fr">
-        <CardFormRow gridColumn="1/-1">
-          <label>
-            CARDHOLDER NAME
-            <Input
-              type="text"
-              placeholder="e.g. Jane Appleseed"
-              value={cardHolderName}
-              name="cardHolderName"
-              onChange={(e) => handleChange(e)}
-              error={!!cardDetailsError.cardHolderName}
-            />
-          </label>
-          <RowError>{cardDetailsError.cardHolderName}</RowError>
-        </CardFormRow>
+      {isFormSubmitted ? (
+        <SuccessMessage setIsFormSubmitted={setIsFormSubmitted} />
+      ) : (
+        <Grid gridColumn="1fr 1fr">
+          <CardFormRow gridColumn="1/-1">
+            <label>
+              CARDHOLDER NAME
+              <Input
+                type="text"
+                placeholder="e.g. Jane Appleseed"
+                value={cardHolderName}
+                name="cardHolderName"
+                onChange={(e) => handleChange(e)}
+                error={!!cardDetailsError.cardHolderName}
+              />
+            </label>
+            <RowError>{cardDetailsError.cardHolderName}</RowError>
+          </CardFormRow>
 
-        <CardFormRow gridColumn="1/-1">
-          <label>
-            CARD NUMBER
-            <Input
-              type="number"
-              placeholder="e.g. 1234 5678 9764 0000"
-              value={cardNumber}
-              name="cardNumber"
-              onChange={(e) => handleChange(e)}
-              error={!!cardDetailsError.cardNumber}
-            />
-          </label>
-          <RowError>{cardDetailsError.cardNumber}</RowError>
-        </CardFormRow>
+          <CardFormRow gridColumn="1/-1">
+            <label>
+              CARD NUMBER
+              <Input
+                type="text"
+                placeholder="e.g. 1234 5678 9764 0000"
+                value={cardNumber}
+                name="cardNumber"
+                onChange={(e) => handleChange(e)}
+                error={!!cardDetailsError.cardNumber}
+              />
+            </label>
+            <RowError>{cardDetailsError.cardNumber}</RowError>
+          </CardFormRow>
 
-        <CardFormRow gridColumn="1/2">
-          <span aria-hidden="true">EXP. Date (MM/YY)</span>
-          <Grid gridColumn="1fr 1fr">
-            <Input
-              type="number"
-              placeholder="MM"
-              aria-label="Expiry Month"
-              min={1}
-              max={12}
-              value={expiryMonth}
-              name="expiryMonth"
-              onChange={(e) => handleChange(e)}
-              error={!!cardDetailsError.expiryMonth}
-            />
-            <Input
-              type="number"
-              placeholder="YY"
-              aria-label="Expiry Year"
-              value={expiryYear}
-              name="expiryYear"
-              onChange={(e) => handleChange(e)}
-              error={!!cardDetailsError.expiryYear}
-            />
-          </Grid>
-          <RowError>{cardDetailsError.expiryDate}</RowError>
-        </CardFormRow>
+          <CardFormRow gridColumn="1/2">
+            <span aria-hidden="true">EXP. Date (MM/YY)</span>
+            <Grid gridColumn="1fr 1fr">
+              <Input
+                type="number"
+                placeholder="MM"
+                aria-label="Expiry Month"
+                min={1}
+                max={12}
+                value={expiryMonth}
+                name="expiryMonth"
+                onChange={(e) => handleChange(e)}
+                error={!!cardDetailsError.expiryMonth}
+              />
+              <Input
+                type="number"
+                placeholder="YY"
+                aria-label="Expiry Year"
+                value={expiryYear}
+                name="expiryYear"
+                onChange={(e) => handleChange(e)}
+                error={!!cardDetailsError.expiryYear}
+              />
+            </Grid>
+            <RowError>{cardDetailsError.expiryDate}</RowError>
+          </CardFormRow>
 
-        <CardFormRow gridColumn="2/-1">
-          <label>
-            CVC
-            <Input
-              type="number"
-              placeholder="e.g. 123"
-              min={0}
-              value={cvc}
-              name="cvc"
-              onChange={(e) => handleChange(e)}
-              error={!!cardDetailsError.cvc}
-            />
-          </label>
-          <RowError>{cardDetailsError.cvc}</RowError>
-        </CardFormRow>
+          <CardFormRow gridColumn="2/-1">
+            <label>
+              CVC
+              <Input
+                type="number"
+                placeholder="e.g. 123"
+                min={0}
+                value={cvc}
+                name="cvc"
+                onChange={(e) => handleChange(e)}
+                error={!!cardDetailsError.cvc}
+              />
+            </label>
+            <RowError>{cardDetailsError.cvc}</RowError>
+          </CardFormRow>
 
-        <CardFormRow gridColumn="1/-1">
-          <Button>Confirm</Button>
-        </CardFormRow>
-      </Grid>
-
-      <SuccessMessage />
+          <CardFormRow gridColumn="1/-1">
+            <Button disabled={loading}>
+              {loading ? "Adding..." : "Confirm"}
+            </Button>
+          </CardFormRow>
+        </Grid>
+      )}
     </StyledCardForm>
   );
 };
