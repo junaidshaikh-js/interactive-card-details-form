@@ -11,7 +11,6 @@ export const Input = styled.input<{
   height: 100%;
 
   &:focus {
-    outline: none;
     border-color: transparent;
   }
 
@@ -30,11 +29,4 @@ export const InputWrapper = styled.span<{
     background: transparent;
     margin: 0.5rem auto;
     border-radius: 7px;
-
-    ${({ focus, theme }) => {
-      return (
-        focus &&
-        `background: linear-gradient(45deg, ${theme.colors.gradientStart}, ${theme.colors.gradientEnd})`
-      );
-    }}  
 }`;
