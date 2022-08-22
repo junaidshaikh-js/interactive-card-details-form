@@ -34,4 +34,8 @@ export const StyledSuccessMessage = styled.article`
   span:nth-of-type(2) {
     color: gray;
   }
+
+  @media screen and (min-width: 64em) {
+    margin-top: 0;
+  }
 `;
