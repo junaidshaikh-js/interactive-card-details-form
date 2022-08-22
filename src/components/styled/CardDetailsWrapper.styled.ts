@@ -5,7 +5,8 @@ export const CardDetailsWrapper = styled.div`
   gap: 1rem;
   flex-direction: column;
 
-  @media screen and (min-width: 48em) {
+  @media screen and (min-width: 64em) {
+    display: flex;
     flex-direction: row;
   }
 `;

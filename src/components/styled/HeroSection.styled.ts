@@ -3,7 +3,21 @@ import styled from "styled-components";
 export const StyledHeroSection = styled.section`
   position: relative;
   flex-basis: 50%;
+  height: 300px;
   color: ${({ theme }) => theme.colors.white};
+
+  > div:first-child {
+    height: 300px;
+    overflow: hidden;
+  }
+
+  @media screen and (min-width: 64em) {
+    height: auto;
+
+    > div:first-child {
+      height: auto;
+    }
+  }
 `;
 
 const ImageContainer = styled.div`
@@ -11,8 +25,9 @@ const ImageContainer = styled.div`
   width: min(70%, 350px);
   font-size: 1em;
 
-  @media screen and (min-width: 48em) {
+  @media screen and (min-width: 64em) {
     font-size: 1.2em;
+  }
 `;
 
 export const StyledImageContainerBack = styled(ImageContainer)`
@@ -25,7 +40,7 @@ export const StyledImageContainerBack = styled(ImageContainer)`
     right: 10%;
   }
 
-  @media screen and (min-width: 48em) {
+  @media screen and (min-width: 64em) {
     top: 52%;
     left: 31%;
   }
@@ -35,7 +50,7 @@ export const StyledImageContainerFront = styled(ImageContainer)`
   top: 58%;
   left: 7%;
 
-  @media screen and (min-width: 48em) {
+  @media screen and (min-width: 64em) {
     top: 22%;
     left: 20%;
   }

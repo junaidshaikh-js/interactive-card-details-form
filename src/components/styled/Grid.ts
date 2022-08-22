@@ -6,5 +6,6 @@ export const Grid = styled.div<{
   display: grid;
   gap: 10px;
   grid-template-columns: ${({ gridColumn }) => gridColumn};
+  align-items: flex-end;
   width: 100%;
 `;

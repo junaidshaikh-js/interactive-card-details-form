@@ -3,7 +3,7 @@ import DesktopMainBg from "../assets/bg-main-desktop.png";
 import styled from "styled-components";
 
 const MobileImage = styled.img`
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 64em) {
     display: none;
   }
 `;
@@ -11,7 +11,7 @@ const MobileImage = styled.img`
 const DesktopImage = styled.img`
   display: none;
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 64em) {
     display: block;
     height: 100vh;
     width: 50%;
